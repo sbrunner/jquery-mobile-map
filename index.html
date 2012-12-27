@@ -45,6 +45,7 @@
         }
         .ui-layout-north {
             border: none;
+            padding: 0;
         }
         .ui-layout-west {
             border-top: none;
@@ -63,11 +64,19 @@
             width: 100%;
             height: 100%;
         }
+        #nav {
+            position: absolute;
+            bottom: .3em;
+            right: .3em;
+        }
+        #nav > div {
+            margin: 0;
+        }
         #map2-page .ui-content {
             padding: 0;
             height: 100%;
         }
-        #map2 {
+        #map, #map2 {
             width: 100%;
             height: 100%;
         }
@@ -75,11 +84,12 @@
 </head>
 <body>
     <div class="ui-layout-north">
-        <div id="nav" style="margin-left: 1em;"></div>
+        <div style="height: 80px;"></div>
+        <div id="nav"></div>
     </div>
 
     <div class="ui-layout-center">
-        <div id="map" style="width: 100%; height: 100%;"></div>
+        <div id="map"></div>
     </div>
 
     <div class="ui-layout-west">
@@ -164,13 +174,14 @@ $(function() {
     });
 
     var nav = $('<div></div>');
+
     $('<button>About us</button>')
     .appendTo(nav)
     .button({
     })
     .on('click', function() {
         $.mobile.changePage("#aboutus");
-    })
+    });
 
     $('<button>About SV</button>')
     .appendTo(nav)
@@ -178,7 +189,7 @@ $(function() {
     })
     .on('click', function() {
         $.mobile.changePage('#aboutsv');
-    })
+    });
 
     $('<button>Main</button>')
     .appendTo(nav)
@@ -186,7 +197,7 @@ $(function() {
     })
     .on('click', function() {
         $.mobile.changePage("#main");
-    })
+    });
 
     $('<button>Map</button>')
     .appendTo(nav)
@@ -199,7 +210,23 @@ $(function() {
                 type: 'osm'
             }]
         });
+    });
+
+    $('<button>Tost</button>')
+    .appendTo(nav)
+    .button({
     })
+    .on('click', function() {
+        // TODO
+    });
+
+    $('<button>Perm tost</button>')
+    .appendTo(nav)
+    .button({
+    })
+    .on('click', function() {
+        // TODO
+    });
 
     $('<button>One</button>')
     .appendTo(nav)
@@ -211,7 +238,7 @@ $(function() {
             elem.style.display = 'none';
         });
         $('.ui-layout-east #one')[0].style.display = 'inline-block';
-    })
+    });
 
     $('<button>Two</button>')
     .appendTo(nav)
@@ -223,7 +250,7 @@ $(function() {
             elem.style.display = 'none';
         });
         $('.ui-layout-east #two')[0].style.display = 'inline-block';
-    })
+    });
 
     nav.appendTo($('#nav'))
     .controlgroup({
