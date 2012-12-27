@@ -39,6 +39,13 @@
     <script src="mapquery/src/jquery.mapquery.core.js" type="text/javascript"></script>
 
     <style>
+        div.ui-mobile-viewport > div {
+            min-height: 50px !important;
+            height: 100%;
+        }
+        .ui-layout-pain {
+            border: none;
+        }
         .ui-layout-east > * {
             display: inline-block;
             width: 100%;
@@ -123,8 +130,11 @@ require([
   'jquery.mobile'
 ], function($) {*/
 
-
 $(function() {
+    $.extend(  $.mobile , {
+        defaultPageTransition: "none"
+    });
+
     var nav = $('<div></div>');
     $('<button>About us</button>')
     .appendTo(nav)
@@ -155,6 +165,7 @@ $(function() {
     .button({
     })
     .on('click', function() {
+        layout.show('east');
         $('.ui-layout-east > *').each(function (index, elem) {
             elem.style.display = 'none';
         });
@@ -166,6 +177,7 @@ $(function() {
     .button({
     })
     .on('click', function() {
+        layout.show('east');
         $('.ui-layout-east > *').each(function (index, elem) {
             elem.style.display = 'none';
         });
@@ -184,14 +196,19 @@ $(function() {
         }]
     });
 
-    $('body').layout({
+    layout = $('body').layout({
         'defaults': {
-            resizable: true
+            resizable: true,
+            spacing_open: 4,
+            spacing_closed: 4
         },
         west: {
             size: 300,
             minSize: 200,
             maxSize: 500
+        },
+        east: {
+            initHidden: true
         },
         north: {
             resizable: false,
