@@ -1,0 +1,163 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>My Page</title> 
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+
+    <!--script src="jquery-mobile/docs/pages/Backbone-Require/js/libs/require.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script-->
+
+    <!--script src="jquery-mobile/docs/pages/Backbone-Require/js/libs/require.js"></script>
+    <script src="jquery-mobile/docs/pages/Backbone-Require/js/libs/lodash.js"></script>
+    <script src="jquery-mobile/docs/pages/Backbone-Require/js/libs/backbone.js"></script-->
+    <script src="jquery-mobile/docs/pages/Backbone-Require/js/libs/jquery.js"></script>
+
+    <script src="jquerymobile-splitview/src/jquery.mobile.splitview.js"></script>
+	<link rel="stylesheet" href="jquerymobile-splitview/src/jquery.mobile.grids.collapsible.css" />
+	<link rel="stylesheet" href="jquerymobile-splitview/src/jquery.mobile.splitview.css" />
+
+    <script src="jquery-mobile/docs/pages/Backbone-Require/js/libs/jquerymobile.js"></script>
+	<link rel="stylesheet" href="jquery-mobile/css/themes/default/jquery.mobile-1.2.0.css" />
+    <!--
+	<link rel="stylesheet" href="jquery-mobile/css/themes/default/jquery.mobile.theme.css" />
+	<link rel="stylesheet" href="jquery-mobile/css/themes/default/jquery.mobile.css" />
+	<link rel="stylesheet" href="jquery-mobile/css/structure/jquery.mobile.core.css" />
+	<link rel="stylesheet" href="jquery-mobile/css/structure/jquery.mobile.button.css" />
+	<link rel="stylesheet" href="jquery-mobile/css/structure/jquery.mobile.controlgroup.css" />
+	<link rel="stylesheet" href="jquery-mobile/css/structure/jquery.mobile.navbar.css" />
+	<link rel="stylesheet" href="jquery-mobile/css/structure/jquery.mobile.collapsible.css" />
+    -->
+
+</head> 
+<body> 
+
+
+<!--div data-role="page">
+    <div id="nav"></div>
+
+    <div id="list"></div>
+
+    <div id="tabs"></div>
+
+</div><!-- /page -->
+
+
+    <div data-role="panel" data-id="menu" data-hash="crumbs" data-context="a#default">
+      <div data-role="page" id="main">
+
+      	<div data-role="header" data-position="fixed">
+      		<h1>Main</h1>
+      	</div><!-- /header -->
+
+      	<div data-role="content">	
+      		<ul>
+            <li>About
+              <ul>
+                <li><a href="#aboutus" data-panel="menu">About Us</a></li>
+                <li><a href="#aboutsv" data-panel="menu">About Splitview</a></li>
+              </ul>
+            </li>
+          </ul>
+      	</div><!-- /content -->
+      </div><!-- /page -->
+
+      <div data-role="page" id="aboutus" data-title="About us">
+        <div data-role="header">
+        <h1>About us !</h1>
+        </div>
+        <div data-role="content">
+        About us ...
+        </div>
+      </div><!-- /page -->
+      <div data-role="page" id="aboutsv" data-title="About SV">
+        <div data-role="header">
+        <h1>About SV !</h1>
+        </div>
+        <div data-role="content">
+        About SV ...
+        </div>
+      </div><!-- /page -->
+    </div><!-- panel menu -->
+
+    <div data-role="panel" data-id="main" data-hash="false">
+      <div data-role="page" id="map">
+        <div data-role="header">
+            <div id="nav" style="margin-left: 1em;"></div>
+        </div>
+        <div data-role="content">
+        Hello !
+        </div>
+      </div><!-- /page -->
+    </div><!-- panel main -->
+
+<script>
+/*require.config({
+    paths: {
+        'jquery': 'http://code.jquery.com/jquery-1.8.3.js',
+        'jquery.mobile': 'jquery-mobile/js/',
+        "underscore": "libs/lodash",
+        "backbone": "libs/backbone"
+    },
+
+    // Sets the configuration for your third party scripts that are not AMD compatible
+    shim: {
+        "backbone": {
+            "deps": [ "underscore", "jquery" ],
+            "exports": "Backbone"  //attaches "Backbone" to the window object
+        }
+    }
+});
+
+
+require([
+  'jquery',
+  'jquery.mobile'
+], function($) {*/
+
+
+$(function() {
+    var nav = $('<div></div>');
+    $('<button>About us</button>')
+    .appendTo(nav)
+    .button({
+    })
+    .on('click', function() {
+        $.mobile.changePage("#aboutus", "left");
+    })
+    
+    $('<button>About SV</button>')
+    .appendTo(nav)
+    .button({
+    })
+    .on('click', function() {
+        $.mobile.changePage('#aboutsv', "left");
+    })
+    
+    $('<button>Main</button>')
+    .appendTo(nav)
+    .button({
+    })
+    .on('click', function() {
+        $.mobile.changePage("#main", "left");
+    })
+
+    nav.appendTo($('#nav'))
+    .controlgroup({
+        direction: 'horizontal',
+        mini: true
+    });
+
+    $(document).on('ready', function() {
+        $.mobile.changePage("#map", "main");
+    });
+});
+</script>
+
+</body>
+</html>
