@@ -1,0 +1,15 @@
+[submodule "openlayers"]
+	path = openlayers
+	url = git@github.com:openlayers/openlayers.git
+[submodule "mapquery"]
+	path = mapquery
+	url = git@github.com:mapquery/mapquery.git
+[submodule "jquery-mobile"]
+	path = jquery-mobile
+	url = git@github.com:jquery/jquery-mobile.git
+[submodule "backbone"]
+	path = backbone
+	url = git@github.com:documentcloud/backbone.git
+[submodule "underscore"]
+	path = underscore
+	url = git@github.com:documentcloud/underscore.git

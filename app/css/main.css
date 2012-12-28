@@ -1,0 +1,69 @@
+
+/*
+@import url("http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css");
+@import url("http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.cs");
+*/
+
+@import url("../../layout-default-latest.css");
+
+@import url("../../jquery-mobile/css/themes/default/jquery.mobile.theme.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.core.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.structure.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.controlgroup.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.button.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.listview.css");
+
+@import url("../openlayers/theme/default/style.css");
+
+div.ui-mobile-viewport > div.ui-page {
+    min-height: 50px !important;
+    height: 100%;
+    background: none;
+    background-color: #F9F9F9;
+}
+div.ui-mobile-viewport > div.ui-page > div.ui-content {
+    background-color: #F9F9F9;
+}
+.ui-layout-pane {
+    padding: 0;
+}
+.ui-layout-north {
+    border: none;
+    background-color: #a02d00;
+    background-image: url('../images/header.jpeg');
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+.ui-layout-west {
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+}
+.ui-layout-center {
+    border-bottom: none;
+}
+.ui-layout-east {
+    border-bottom: none;
+    border-right: none;
+}
+.ui-layout-east > * {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+#nav {
+    position: absolute;
+    bottom: .3em;
+    right: .3em;
+}
+#nav > div {
+    margin: 0;
+}
+#map2-page .ui-content {
+    padding: 0;
+    height: 100%;
+}
+#map, #map2 {
+    width: 100%;
+    height: 100%;
+}
