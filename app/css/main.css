@@ -13,13 +13,19 @@
 @import url("../../jquery-mobile/css/structure/jquery.mobile.button.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.listview.css");
 
-@import url("../openlayers/theme/default/style.css");
+@import url("../../openlayers/theme/default/style.css");
 
-div.ui-mobile-viewport > div.ui-page {
-    min-height: 50px !important;
-    height: 100%;
-    background: none;
-    background-color: #F9F9F9;
+/*@media only screen and (min-width: 700px) {
+    div.ui-mobile-viewport > div.ui-page {
+        min-height: 50px !important;
+        height: 100%;
+        background: none;
+        background-color: #F9F9F9;
+    }
+}*/
+body {
+    margin: 0;
+    padding: 0;
 }
 div.ui-mobile-viewport > div.ui-page > div.ui-content {
     background-color: #F9F9F9;

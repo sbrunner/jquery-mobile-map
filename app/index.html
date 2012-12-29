@@ -17,18 +17,18 @@ TODO
 -->
 </head>
 <body>
-    <div class="ui-layout-north">
+    <div class="ui-layout-north small-hide">
         <div style="height: 80px;"></div>
         <div id="nav"></div>
     </div>
 
-    <div class="ui-layout-center">
+    <div class="ui-layout-center small-hide">
         <div id="map"></div>
     </div>
 
     <div class="ui-layout-west">
-    <div data-role="panel" data-hash="crumbs" data-context="a#default">
-      <div data-role="page" id="main" data-hash="false">
+    <div data-role="panel" id="page" data-hash="crumbs" data-context="a#default">
+      <div data-role="page" id="main">
 
           <div data-role="header">
               <h1>Main</h1>
@@ -70,33 +70,13 @@ TODO
         <div data-role="content">
             <div id="map2"></div>
         </div>
+        <!--div data-role="content" id="map2"></div-->
       </div><!-- /page -->
     </div><!-- panel -->
     </div>
-    <div class="ui-layout-east">
+    <div class="ui-layout-east small-hide">
         <div id="one"><p>One</p><p>One</p></div>
         <div id="two" style="display: none;"><p>Two</p><p>Two</p></div>
     </div>
-
-
-<script>
-/*require.config({
-    paths: {
-        'jquery': 'http://code.jquery.com/jquery-1.8.3.js',
-        'jquery.mobile': 'jquery-mobile/js/',
-        "underscore": "libs/lodash",
-        "backbone": "libs/backbone"
-    },
-
-    // Sets the configuration for your third party scripts that are not AMD compatible
-    shim: {
-        "backbone": {
-            "deps": [ "underscore", "jquery" ],
-            "exports": "Backbone"  //attaches "Backbone" to the window object
-        }
-    }
-});
-*/
-</script>
 </body>
 </html>
