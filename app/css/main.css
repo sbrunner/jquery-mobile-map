@@ -12,17 +12,11 @@
 @import url("../../jquery-mobile/css/structure/jquery.mobile.controlgroup.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.button.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.listview.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.table.css");
+@import url("../../jquery-mobile/css/structure/jquery.mobile.table.reflow.css");
 
 @import url("../../openlayers/theme/default/style.css");
 
-/*@media only screen and (min-width: 700px) {
-    div.ui-mobile-viewport > div.ui-page {
-        min-height: 50px !important;
-        height: 100%;
-        background: none;
-        background-color: #F9F9F9;
-    }
-}*/
 body {
     margin: 0;
     padding: 0;
@@ -47,9 +41,6 @@ body {
     text-align: center;
     padding: 1em 2em;
     font-weight: bold;
-}
-div.ui-mobile-viewport > div.ui-page > div.ui-content {
-    background-color: #F9F9F9;
 }
 .ui-layout-pane {
     padding: 0;

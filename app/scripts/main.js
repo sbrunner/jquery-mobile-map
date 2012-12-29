@@ -33,8 +33,10 @@ require.config({
 require([
     "jquery",
     "jquery-mobile/jquery.mobile.init", // to parse the HTML
-    "jquery-mobile/widgets/page.sections", // for pages (HTML)
+    "jquery-mobile/widgets/page.sections", // HTML, for pages
     "jquery-mobile/widgets/listview", // HTML
+    "jquery-mobile/widgets/table",
+//    "jquery-mobile/widgets/table.reflow", // acctually unusable :(
     "jquery-mobile/widgets/controlgroup",
     "jquery-mobile/widgets/popup",
     "jquery-mobile/widgets/forms/button",
@@ -50,9 +52,57 @@ require([
         hashListeningEnabled: false
     });
 
-    $(function() {
+    $.mobile.table.prototype.options.mode = "reflow";
+    $.mobile.table.prototype.options.classes = $.extend(
+        $.mobile.table.prototype.options.classes,
+        {
+            reflowTable: "ui-table-reflow",
+            cellLabels: "ui-table-cell-label"
+        }
+    );
+    function reflow($table) {
+        var self = $table.data("mobile-table"),
+            o = self.options;
 
-        if ($('body').width() < 800) {
+        // If it's not reflow mode, return here.
+        if (o.mode !== "reflow") {
+            return;
+        }
+
+        self.element.addClass(o.classes.reflowTable);
+
+        // get headers in reverse order so that top-level headers are appended last
+        var reverseHeaders =  $(self.allHeaders.get().reverse());
+
+        // create the hide/show toggles
+        reverseHeaders.each(function(i) {
+            var $cells = $(this).jqmData("cells"),
+                colstart = $(this).jqmData("colstart"),
+                hierarchyClass = $cells.not($table).filter("thead th").length && " ui-table-cell-label-top",
+                text = $(this).text();
+
+            if (text !== "") {
+                if (hierarchyClass) {
+                    var iteration = parseInt($(this).attr("colspan"), 10),
+                        filter = "";
+
+                    if (iteration){
+                        filter = "td:nth-child("+ iteration +"n + " + (colstart) +")";
+                    }
+                    $cells.filter(filter).prepend("<b class='" + o.classes.cellLabels + hierarchyClass + "'>" + text + "</b>" );
+                }
+                else {
+                    $cells.prepend("<b class='" + o.classes.cellLabels + "'>" + text + "</b>" );
+                }
+
+            }
+        });
+    }
+
+    $(function() {
+        var smallScreen = $('body').width() < 800;
+
+        if (smallScreen) {
             $('.small-hide').hide();
         }
         else {
@@ -69,6 +119,12 @@ require([
                 },
                 east: {
                     initHidden: true
+                },
+                south: {
+                    initHidden: true,
+                    size: 200,
+                    minSize: 100,
+                    maxSize: 300
                 },
                 north: {
                     size: 130,
@@ -106,7 +162,7 @@ require([
             $.mobile.changePage("#main", { changeHash: false });
         });
 
-        if ($('body').width() < 800) {
+        if (smallScreen) {
             $('<button>Map</button>')
             .appendTo(nav)
             .button({
@@ -161,7 +217,7 @@ require([
         });
 
 
-        if ($('body').width() >= 800) {
+        if (!smallScreen) {
             $('<button>One</button>')
             .appendTo(nav)
             .button({
@@ -186,13 +242,130 @@ require([
                 $('.ui-layout-east #two')[0].style.display = 'inline-block';
             });
         }
+        $('<button>Table</button>')
+        .appendTo(nav)
+        .button({
+        })
+        .on('click', function() {
+            var table = $(
+                '<table class="ui-responsive">' +
+                '  <thead>' +
+                '    <tr>' +
+                '      <th data-priority="1">Rank</th>' +
+                '      <th style="width:40%">Movie Title</th>' +
+                '      <th data-priority="2">Year</th>' +
+                '      <th data-priority="3"><abbr title="Rotten Tomato Rating">Rating</abbr></th>' +
+                '      <th data-priority="4">Reviews</th>' +
+                '      <th data-priority="4">Director</th>' +
+                '    </tr>' +
+                '  </thead>' +
+                '  <tbody>' +
+                '    <tr>' +
+                '      <th>1</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>' +
+                '      <td>1941</td>' +
+                '      <td>100%</td>' +
+                '      <td>74</td>' +
+                '      <td>Orson Welles</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>2</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Casablanca_(film)" data-rel="external">Casablanca</a></td>' +
+                '      <td>1942</td>' +
+                '      <td>97%</td>' +
+                '      <td>64</td>' +
+                '      <td>Michael Curtiz</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>3</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/The_Godfather" data-rel="external">The Godfather</a></td>' +
+                '      <td>1972</td>' +
+                '      <td>97%</td>' +
+                '      <td>87</td>' +
+                '      <td>Francis Ford Coppola</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>4</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)" data-rel="external">Gone with the Wind</a></td>' +
+                '      <td>1939</td>' +
+                '      <td>96%</td>' +
+                '      <td>87</td>' +
+                '      <td>Victor Fleming</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>5</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Lawrence_of_Arabia_(film)" data-rel="external">Lawrence of Arabia</a></td>' +
+                '      <td>1962</td>' +
+                '      <td>94%</td>' +
+                '      <td>87</td>' +
+                '      <td>Sir David Lean</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>6</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Dr._Strangelove" data-rel="external">Dr. Strangelove Or How I Learned to Stop Worrying and Love the Bomb</a></td>' +
+                '      <td>1964</td>' +
+                '      <td>92%</td>' +
+                '      <td>74</td>' +
+                '      <td>Stanley Kubrick</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>7</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/The_Graduate" data-rel="external">The Graduate</a></td>' +
+                '      <td>1967</td>' +
+                '      <td>91%</td>' +
+                '      <td>122</td>' +
+                '      <td>Mike Nichols</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>8</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)" data-rel="external">The Wizard of Oz</a></td>' +
+                '      <td>1939</td>' +
+                '      <td>90%</td>' +
+                '      <td>72</td>' +
+                '      <td>Victor Fleming</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>9</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Singin%27_in_the_Rain" data-rel="external">Singin\' in the Rain</a></td>' +
+                '      <td>1952</td>' +
+                '      <td>89%</td>' +
+                '      <td>85</td>' +
+                '      <td>Stanley Donen, Gene Kelly</td>' +
+                '    </tr>' +
+                '    <tr>' +
+                '      <th>10</th>' +
+                '      <td class="title"><a href="http://en.wikipedia.org/wiki/Inception" data-rel="external">Inception</a></td>' +
+                '      <td>2010</td>' +
+                '      <td>84%</td>' +
+                '      <td>78</td>' +
+                '      <td>Christopher Nolan</td>' +
+                '    </tr>' +
+                '  </tbody>' +
+                '</table>')
+            .table();
+            table.reflow = reflow;
+            table.reflow(table);
+            if (smallScreen) {
+                var page = $('#free'),
+                    title = page.children(":jqmData(role=header) h1"),
+                    content = page.children(":jqmData(role=content)");
+                title.html('Results');
+                content.html('');
+                table.appendTo(content);
+                $.mobile.changePage(page, { changeHash: false });
+            }
+            else {
+                table.appendTo($('#south'))
+                layout.show('south');
+            }
+        });
 
-        if ($('body').width() < 800) {
-            $('<div id="popupMenu">')
+        if (smallScreen) {
+            var popup = $('<div id="popupMenu">')
             nav.appendTo(popup)
             .controlgroup({
-            })
-            .appendTo($('body'))
+            });
+            popup.appendTo($('body'))
             .popup();
             // onpagecreate ...
             $('<button data-icon="arrow-d" class="ui-btn-right">Menu</button>')
@@ -214,14 +387,14 @@ require([
             });
         }
 
-        if ($('body').width() < 800) {
+        if (smallScreen) {
             $.mobile.changePage("#map2-page", { changeHash: false });
         }
         else {
 //            $.mobile.changePage("#main", { changeHash: false });
         }
 
-        var map = $($('body').width() < 800 ? '#map2' : '#map').mapQuery({
+        var map = $(smallScreen ? '#map2' : '#map').mapQuery({
             layers: [{
                 type: 'osm'
             }],
