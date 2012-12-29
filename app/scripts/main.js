@@ -38,6 +38,7 @@ require([
     "jquery-mobile/widgets/controlgroup",
     "jquery-mobile/widgets/popup",
     "jquery-mobile/widgets/forms/button",
+    "jquery-mobile/transitions/slideup",
     "jquery-layout",
     "openlayers",
     "mapquery/jquery.mapquery.core"
@@ -112,22 +113,39 @@ require([
             })
             .on('click', function() {
                 $.mobile.changePage("#map2-page", { changeHash: false });
-/*                $('#map2').mapQuery({
-                    layers: [{
-                        type: 'osm'
-                    }],
-                    theme: null,
-                    center: { position: [6.5, 46.5], zoom: 10 }
-                });*/
             });
         }
 
+        $('<div id="toast"></div>')
+        .appendTo($('body'))
+        .popup({
+            corners: false,
+            theme: 'none',
+            shadow: false,
+            tolerance: '0,0'
+        });
+        var timer = null;
         $('<button>Tost</button>')
         .appendTo(nav)
         .button({
         })
         .on('click', function() {
-            // TODO
+            $('#toast').html('My popup');
+            if (timer) {
+                clearTimeout(timer);
+            }
+            else {
+                $('#toast').popup('open', {
+                    transition: "slideup",
+                    positionTo: "window"
+                });
+                $('#toast-screen').removeClass('in');
+                $('#toast-screen').addClass('ui-screen-hidden');
+            }
+            timer = setTimeout(function () {
+                $('#toast').popup('close');
+                timer = null;
+            }, 3000);
         });
 
         $('<button>Perm tost</button>')
@@ -135,7 +153,11 @@ require([
         .button({
         })
         .on('click', function() {
-            // TODO
+            $('#toast').html('My segond popup');
+            $('#toast').popup('open', {
+                transition: "slideup",
+                positionTo: "window"
+            });
         });
 
 
@@ -166,11 +188,11 @@ require([
         }
 
         if ($('body').width() < 800) {
-            var popup = $('<div id="popupMenu">')
+            $('<div id="popupMenu">')
             nav.appendTo(popup)
             .controlgroup({
-            });
-            popup.appendTo($('body'))
+            })
+            .appendTo($('body'))
             .popup();
             // onpagecreate ...
             $('<button data-icon="arrow-d" class="ui-btn-right">Menu</button>')
@@ -178,7 +200,10 @@ require([
             .button({
             })
             .on('click', function() {
-                $("#popupMenu").popup("open");
+                $("#popupMenu").popup("open", {
+                    x: $('body').width(),
+                    y: $('body').height()
+                });
             });
         }
         else {
@@ -195,7 +220,7 @@ require([
         else {
 //            $.mobile.changePage("#main", { changeHash: false });
         }
-                
+
         var map = $($('body').width() < 800 ? '#map2' : '#map').mapQuery({
             layers: [{
                 type: 'osm'

@@ -27,6 +27,27 @@ body {
     margin: 0;
     padding: 0;
 }
+#popupMenu .ui-controlgroup {
+    margin: 0;
+}
+#toast-screen {
+    background: rgba(0, 0, 0, .2);
+}
+#toast-popup {
+    bottom: 0 !important;
+    top: auto !important;
+}
+#toast {
+    border: 1px solid rgba(0, 0, 0, .8);
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    background: rgba(0, 0, 0, .4);
+    margin: auto -1px;
+    color: rgba(255, 255, 255, .8);
+    text-align: center;
+    padding: 1em 2em;
+    font-weight: bold;
+}
 div.ui-mobile-viewport > div.ui-page > div.ui-content {
     background-color: #F9F9F9;
 }
