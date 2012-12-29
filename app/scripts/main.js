@@ -5,11 +5,14 @@ require.config({
         'app'
     ],
     paths: {
+        "app": "scripts",
         "jquery": "../jquery-mobile/js/jquery",
         "jquery-mobile": '../jquery-mobile/js',
+        "jquery-ui": '../jquery-ui/ui',
         "text": "../jquery-mobile/js/text",
         "depend": "../jquery-mobile/js/depend",
         "jquery-layout": '../jquery.layout-latest',
+        "jqgrid": '../jqGrid/js',
         "openlayers": "../openlayers/build/OpenLayers",
         "backbone": "../backbone/backbone",
         "underscore": "../underscore/underscore",
@@ -23,9 +26,28 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
+        'jqgrid': {
+            deps: ['jquery']
+        },
+        'app/jqgrid.compat': { deps: ['jquery', ] },
+        'jqgrid/grid.base': { deps: ['app/jqgrid.compat', ] },
+        'jqgrid/grid.common': { deps: ['jquery', 'jqgrid/grid.formedit'] },
+        'jqgrid/grid.jqueryui': { deps: ['jqgrid/grid.common', 'jqgrid/grid.base'] },
+        'jqgrid/grid.import': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.formedit': { deps: ['jqgrid/JsonXml', 'jqgrid/grid.base'] },
+        'jqgrid/grid.inlinedit': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.celledit': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.subgrid': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.treegrid': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.grouping': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.custom': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.tbltogrid': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.import': { deps: ['jqgrid/grid.jqueryui', 'jqgrid/JsonXml'] },
+        'jqgrid/jquery.fmatter': { deps: ['jqgrid/grid.jqueryui'] },
+        'jqgrid/grid.filter': { deps: ['jqgrid/grid.jqueryui'] },
+
         'mapquery': {
-            deps: ['openlayers', 'jquery'],
-            exports: 'mapquery'
+            deps: ['openlayers', 'jquery']
         }
     }
 });
@@ -43,7 +65,10 @@ require([
     "jquery-mobile/transitions/slideup",
     "jquery-layout",
     "openlayers",
-    "mapquery/jquery.mapquery.core"
+    "mapquery/jquery.mapquery.core",
+    "jqgrid/i18n/grid.locale-en",
+    "jqgrid/grid.inlinedit",
+    "jqgrid/grid.filter"
 ], function($) {
     $.extend($.mobile, {
         defaultPageTransition: "none",
@@ -216,7 +241,6 @@ require([
             });
         });
 
-
         if (!smallScreen) {
             $('<button>One</button>')
             .appendTo(nav)
@@ -355,10 +379,63 @@ require([
                 $.mobile.changePage(page, { changeHash: false });
             }
             else {
+                $('#south').html('');
                 table.appendTo($('#south'))
                 layout.show('south');
             }
         });
+
+        if (!smallScreen) {
+            $('<button>Edit</button>')
+            .appendTo(nav)
+            .button({
+            })
+            .on('click', function() {
+                var grid = $('<table id="rowed2"></table>');
+                $('#south').html('');
+                grid.appendTo($('#south'));
+                $('<div id="prowed2"></div>').appendTo($('#south'));
+                grid.jqGrid({
+                    datatype: "local",
+                    colNames:['Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Total', 'Notes'],
+                    colModel:[
+                        {name: 'id', index: 'id', width: 55},
+                        {name: 'invdate', index:'invdate', width: 90, editable:true},
+                        {name: 'name', index:'name', width: 100, editable:true},
+                        {name: 'amount', index:'amount', width: 80, align: "right", editable:true},
+                        {name: 'tax', index:'tax', width: 80, align: "right", editable:true},
+                        {name: 'total', index:'total', width: 80,align: "right", editable:true},
+                        {name: 'note', index:'note', width: 150, sortable: false, editable:true}
+                    ],
+                    sortname: 'id',
+                    viewrecords: true,
+                    sortorder: "desc",
+                    pager: '#prowed2',
+                    height: "100%",
+                    width: "100%",
+                    multiselect: true,
+                });
+                grid.jqGrid('navGrid', "#prowed2", {edit:false, add:false, del:false});
+                grid.jqGrid('inlineNav',"#prowed2");
+
+                var mydata = [
+                    {id:"1",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+                    {id:"2",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+                    {id:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+                    {id:"4",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+                    {id:"5",invdate:"2007-10-05",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+                    {id:"6",invdate:"2007-09-06",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+                    {id:"7",invdate:"2007-10-04",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+                    {id:"8",invdate:"2007-10-03",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+                    {id:"9",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"}
+                ];
+                for (var i=0; i<=mydata.length; i++) {
+                    grid.jqGrid('addRowData', i+1, mydata[i]);
+                }
+
+                layout.show('south');
+            });
+        }
 
         if (smallScreen) {
             var popup = $('<div id="popupMenu">')

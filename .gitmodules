@@ -13,3 +13,6 @@
 [submodule "underscore"]
 	path = underscore
 	url = git@github.com:documentcloud/underscore.git
+[submodule "jquery-ui"]
+	path = jquery-ui
+	url = git@github.com:jquery/jquery-ui.git

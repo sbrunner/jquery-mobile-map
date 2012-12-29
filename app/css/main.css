@@ -15,11 +15,19 @@
 @import url("../../jquery-mobile/css/structure/jquery.mobile.table.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.table.reflow.css");
 
+@import url("../../jquery-ui/themes/base/jquery.ui.core.css");
+@import url("../../jquery-ui/themes/base/jquery.ui.theme.css");
+
+@import url("../../jqGrid/css/ui.jqgrid.css");
+
 @import url("../../openlayers/theme/default/style.css");
 
 body {
     margin: 0;
     padding: 0;
+}
+#refresh_rowed2, #prowed2_center, #prowed2_right {
+    display: none;
 }
 #popupMenu .ui-controlgroup {
     margin: 0;
