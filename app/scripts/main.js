@@ -16,6 +16,7 @@ require.config({
         "openlayers": "../openlayers/build/OpenLayers",
         "backbone": "../backbone/backbone",
         "underscore": "../underscore/underscore",
+        "datatables": "../DataTables/media/js/jquery.dataTables",
         "mapquery": "../mapquery/src"
     },
     shim: {
@@ -26,9 +27,13 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
-        'jqgrid': {
-            deps: ['jquery']
+        'mapquery': {
+            deps: ['openlayers', 'jquery']
         },
+        'datatables': {
+            deps: ['openlayers', 'jquery']
+        },
+        
         'app/jqgrid.compat': { deps: ['jquery', ] },
         'jqgrid/grid.base': { deps: ['app/jqgrid.compat', ] },
         'jqgrid/grid.common': { deps: ['jquery', 'jqgrid/grid.formedit'] },
@@ -44,11 +49,7 @@ require.config({
         'jqgrid/grid.tbltogrid': { deps: ['jqgrid/grid.jqueryui'] },
         'jqgrid/grid.import': { deps: ['jqgrid/grid.jqueryui', 'jqgrid/JsonXml'] },
         'jqgrid/jquery.fmatter': { deps: ['jqgrid/grid.jqueryui'] },
-        'jqgrid/grid.filter': { deps: ['jqgrid/grid.jqueryui'] },
-
-        'mapquery': {
-            deps: ['openlayers', 'jquery']
-        }
+        'jqgrid/grid.filter': { deps: ['jqgrid/grid.jqueryui'] }
     }
 });
 
@@ -68,7 +69,8 @@ require([
     "mapquery/jquery.mapquery.core",
     "jqgrid/i18n/grid.locale-en",
     "jqgrid/grid.inlinedit",
-    "jqgrid/grid.filter"
+    "jqgrid/grid.filter",
+    "datatables"
 ], function($) {
     $.extend($.mobile, {
         defaultPageTransition: "none",
@@ -385,6 +387,50 @@ require([
             }
         });
 
+        $('<button>DT</button>')
+        .appendTo(nav)
+        .button({
+        })
+        .on('click', function() {
+            $('#south').html('');
+            var grid = $('<table cellpadding="0" cellspacing="0" border="0" class="display"></table>');
+            grid.dataTable({
+                "aaData": [
+                    [ "Trident", "Internet Explorer 4.0", "Win 95+", 4, "X" ],
+                    [ "Trident", "Internet Explorer 5.0", "Win 95+", 5, "C" ],
+                    [ "Trident", "Internet Explorer 5.5", "Win 95+", 5.5, "A" ],
+                    [ "Trident", "Internet Explorer 6.0", "Win 98+", 6, "A" ],
+                    [ "Trident", "Internet Explorer 7.0", "Win XP SP2+", 7, "A" ],
+                    [ "Gecko", "Firefox 1.5", "Win 98+ / OSX.2+", 1.8, "A" ],
+                    [ "Gecko", "Firefox 2", "Win 98+ / OSX.2+", 1.8, "A" ],
+                    [ "Gecko", "Firefox 3", "Win 2k+ / OSX.3+", 1.9, "A" ],
+                    [ "Webkit", "Safari 1.2", "OSX.3", 125.5, "A" ],
+                    [ "Webkit", "Safari 1.3", "OSX.3", 312.8, "A" ],
+                    [ "Webkit", "Safari 2.0", "OSX.4+", 419.3, "A" ],
+                    [ "Webkit", "Safari 3.0", "OSX.4+", 522.1, "A" ]
+                ],
+                "aoColumns": [
+                    { "sTitle": "Engine" },
+                    { "sTitle": "Browser" },
+                    { "sTitle": "Platform" },
+                    { "sTitle": "Version", "sClass": "center" },
+                    {
+                        "sTitle": "Grade",
+                        "sClass": "center",
+                        "fnRender": function(obj) {
+                            var sReturn = obj.aData[obj.iDataColumn];
+                            if (sReturn == "A") {
+                                sReturn = "<b>A</b>";
+                            }
+                            return sReturn;
+                        }
+                    }
+                ]
+            })
+            .appendTo($('#south'));
+            layout.show('south');
+        });
+
         if (!smallScreen) {
             $('<button>Edit</button>')
             .appendTo(nav)
@@ -417,7 +463,6 @@ require([
                 });
                 grid.jqGrid('navGrid', "#prowed2", {edit:false, add:false, del:false});
                 grid.jqGrid('inlineNav',"#prowed2");
-
                 var mydata = [
                     {id:"1",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
                     {id:"2",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
@@ -432,7 +477,6 @@ require([
                 for (var i=0; i<=mydata.length; i++) {
                     grid.jqGrid('addRowData', i+1, mydata[i]);
                 }
-
                 layout.show('south');
             });
         }

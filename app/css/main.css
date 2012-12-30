@@ -20,6 +20,8 @@
 
 @import url("../../jqGrid/css/ui.jqgrid.css");
 
+@import url("../../DataTables/media/css/jquery.dataTables.css");
+
 @import url("../../openlayers/theme/default/style.css");
 
 body {
