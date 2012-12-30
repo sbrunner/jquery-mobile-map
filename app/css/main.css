@@ -6,6 +6,9 @@
 
 @import url("../../layout-default-latest.css");
 
+@import url("../../jquery-ui/themes/base/jquery.ui.core.css");
+@import url("../../jquery-ui/themes/base/jquery.ui.theme.css");
+
 @import url("../../jquery-mobile/css/themes/default/jquery.mobile.theme.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.core.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.structure.css");
@@ -14,9 +17,6 @@
 @import url("../../jquery-mobile/css/structure/jquery.mobile.listview.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.table.css");
 @import url("../../jquery-mobile/css/structure/jquery.mobile.table.reflow.css");
-
-@import url("../../jquery-ui/themes/base/jquery.ui.core.css");
-@import url("../../jquery-ui/themes/base/jquery.ui.theme.css");
 
 @import url("../../jqGrid/css/ui.jqgrid.css");
 
