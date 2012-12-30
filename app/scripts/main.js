@@ -38,7 +38,6 @@ require.config({
         'jqgrid/grid.base': { deps: ['app/jqgrid.compat', ] },
         'jqgrid/grid.common': { deps: ['jquery', 'jqgrid/grid.formedit'] },
         'jqgrid/grid.jqueryui': { deps: ['jqgrid/grid.common', 'jqgrid/grid.base'] },
-        'jqgrid/grid.import': { deps: ['jqgrid/grid.jqueryui'] },
         'jqgrid/grid.formedit': { deps: ['jqgrid/JsonXml', 'jqgrid/grid.base'] },
         'jqgrid/grid.inlinedit': { deps: ['jqgrid/grid.jqueryui'] },
         'jqgrid/grid.celledit': { deps: ['jqgrid/grid.jqueryui'] },
