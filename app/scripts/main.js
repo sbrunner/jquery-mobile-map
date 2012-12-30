@@ -199,7 +199,7 @@ require([
             });
         }
 
-        $('<div id="toast"></div>')
+        $('<div id="tost"></div>')
         .appendTo($('body'))
         .popup({
             corners: false,
@@ -213,20 +213,20 @@ require([
         .button({
         })
         .on('click', function() {
-            $('#toast').html('My popup');
+            $('#tost').html('My popup');
             if (timer) {
                 clearTimeout(timer);
             }
             else {
-                $('#toast').popup('open', {
+                $('#tost').popup('open', {
                     transition: "slideup",
                     positionTo: "window"
                 });
-                $('#toast-screen').removeClass('in');
-                $('#toast-screen').addClass('ui-screen-hidden');
+                $('#tost-screen').removeClass('in');
+                $('#tost-screen').addClass('ui-screen-hidden');
             }
             timer = setTimeout(function () {
-                $('#toast').popup('close');
+                $('#tost').popup('close');
                 timer = null;
             }, 3000);
         });
@@ -236,8 +236,8 @@ require([
         .button({
         })
         .on('click', function() {
-            $('#toast').html('My segond popup');
-            $('#toast').popup('open', {
+            $('#tost').html('My segond popup');
+            $('#tost').popup('open', {
                 transition: "slideup",
                 positionTo: "window"
             });

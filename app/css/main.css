@@ -34,14 +34,14 @@ body {
 #popupMenu .ui-controlgroup {
     margin: 0;
 }
-#toast-screen {
+#tost-screen {
     background: rgba(0, 0, 0, .2);
 }
-#toast-popup {
+#tost-popup {
     bottom: 0 !important;
     top: auto !important;
 }
-#toast {
+#tost {
     border: 1px solid rgba(0, 0, 0, .8);
     border-bottom: none;
     border-radius: 10px 10px 0 0;
